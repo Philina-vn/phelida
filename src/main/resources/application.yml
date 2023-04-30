@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/phelida
+    username: postgres
+    password: root
+
+  servlet:
+    multipart:
+      max-file-size: 100000000
+      max-request-size: 100000000
+
+jwt:
+  secret: 6E3272357538782F413F442A472D4B6150645367566B59703373367639792442
+  expiration-time: 3600000
+
+server:
+  port: 8081
