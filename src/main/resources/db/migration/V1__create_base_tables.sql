@@ -11,13 +11,31 @@ create table products
     name        varchar(255),
     order_num   integer,
     price       double precision,
+    color       varchar(255),
+    storage_num integer,
     category_id bigint
         constraint FK_products_category_id references categories (id)
+);
+
+create table materials
+(
+    id   bigserial primary key,
+    name varchar(255)
+);
+
+create table products_materials
+(
+    product_id  bigint not null
+        constraint FK_products_materials_product_id references products (id),
+    material_id bigint not null
+        constraint FK_products_materials_material_id references materials (id)
 );
 
 create table user_accounts
 (
     id       bigserial primary key,
+    name     varchar(255),
+    surname  varchar(255),
     email    varchar(255),
     password varchar(255),
     role     varchar(255)

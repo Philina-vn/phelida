@@ -4,10 +4,11 @@ import by.philina.phelida.order.domain.Order;
 import by.philina.phelida.order.domain.OrderCreationDto;
 import by.philina.phelida.order.exception.OrderNotFound;
 import by.philina.phelida.product.ProductService;
+import by.philina.phelida.statistics.StatisticsService;
 import by.philina.phelida.user.domain.UserAccount;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -20,6 +21,7 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final ProductService productService;
+    private final StatisticsService statisticsService;
 
     public List<Order> findAll() {
         return orderRepository.findAll();
@@ -35,6 +37,7 @@ public class OrderService {
                               .toList()
                 )
                 .setOrderStatus(REGISTERED);
+        statisticsService.incrementOrdersNum();
         return orderRepository.save(order);
     }
 
