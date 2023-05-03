@@ -8,8 +8,8 @@ import java.util.List;
 public class ProductCreationDto {
     private String name;
     private String description;
-    private String category;
     private String color;
+    private Long categoryId;
     private List<Long> materialIds;
     private Double price;
     private Integer storageNum;

@@ -2,11 +2,14 @@ import React, {useEffect, useState} from 'react';
 import {useParams} from "react-router";
 import axios from "axios";
 import {getJwtToken} from "../../utils/AuthUtils";
+import {useDispatch} from "react-redux";
+import {setItemInCart} from "../../redux/Cart/reducer";
 
 const ProductPage = () => {
 
     const [product, setProduct] = useState(null);
     const {id} = useParams();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         axios.get("http://localhost:8081/products/" + id, {
@@ -21,6 +24,11 @@ const ProductPage = () => {
 
     const fetchMaterials = (product) => {
         return product.materials.map(obj => obj.name).join(', ');
+    }
+
+    const addToCart = (e) => {
+        e.stopPropagation();
+        dispatch(setItemInCart(product))
     }
 
     if (!product) return null;
@@ -55,7 +63,8 @@ const ProductPage = () => {
                         <div className="flex">
                             <span className="title-font font-medium text-2xl text-gray-900">{product.price} BYN</span>
                             <button
-                                className="flex ml-auto text-white bg-gray-800 border-0 py-2 px-6 focus:outline-none hover:bg-gray-900 rounded">
+                                className="flex ml-auto text-white bg-gray-800 border-0 py-2 px-6 focus:outline-none hover:bg-gray-900 rounded"
+                                onClick={addToCart}>
                                 Добавить в корзину
                             </button>
                         </div>

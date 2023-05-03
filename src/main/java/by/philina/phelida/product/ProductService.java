@@ -36,7 +36,7 @@ public class ProductService {
                 .setName(dto.getName())
                 .setDescription(dto.getDescription())
                 .setPrice(dto.getPrice())
-                .setCategory(categoryService.findByName(dto.getName()))
+                .setCategory(categoryService.findById(dto.getCategoryId()))
                 .setColor(dto.getColor())
                 .setStorageNum(dto.getStorageNum())
                 .setOrderNum(0)

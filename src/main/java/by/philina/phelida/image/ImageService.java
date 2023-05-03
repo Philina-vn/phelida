@@ -12,7 +12,7 @@ import java.nio.file.Paths;
 public class ImageService {
 
     public void uploadImage(Long productId, MultipartFile file) throws IOException {
-        Path uploadPath = Paths.get("src", "main", "resources", "images");
+        Path uploadPath = Paths.get("src", "main", "images");
         String path = uploadPath + "/" + productId + ".jpg";
         Files.write(Paths.get(path), file.getBytes());
     }

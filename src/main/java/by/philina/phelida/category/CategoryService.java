@@ -1,5 +1,6 @@
 package by.philina.phelida.category;
 
+import by.philina.phelida.product.exception.ProductNotFound;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,11 @@ public class CategoryService {
 
     public Category findByName(String name) {
         return categoryRepository.findByName(name);
+    }
+
+    public Category findById(Long id) {
+        return categoryRepository.findById(id)
+                .orElseThrow(() -> new ProductNotFound("Категория не найдена."));
     }
 
     public List<Category> findALl() {
