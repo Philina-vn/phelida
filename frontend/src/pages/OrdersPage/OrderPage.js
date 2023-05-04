@@ -1,15 +1,14 @@
 import React, {useEffect, useState} from 'react';
-import {useNavigate} from "react-router";
 import axios from "axios";
 import {getJwtToken} from "../../utils/AuthUtils";
 import {Link} from "react-router-dom";
 
-const OrdersTable = () => {
+const OrderPage = () => {
 
     const [orders, setOrders] = useState([]);
 
     useEffect(() => {
-        axios.get("http://localhost:8081/orders/my", {
+        axios.get("http://localhost:8081/orders", {
             headers: {
                 'Authorization': 'Bearer ' + getJwtToken()
             }
@@ -17,7 +16,7 @@ const OrdersTable = () => {
             .then(response => {
                 setOrders(response.data);
             });
-    }, []);
+    }, [orders]);
 
     const handleProductNames = (order) => {
         const productsWithoutDuplicates = [];
@@ -33,13 +32,25 @@ const OrdersTable = () => {
             }
         });
         return productsWithoutDuplicates.map((product) => (
-            <p><Link className="font-medium hover:cursor-pointer" to={"/products/" + product.id}>{product.name}</Link> - {product.count} шт.</p>
+            <p><Link className="font-medium hover:cursor-pointer"
+                     to={"/products/" + product.id}>{product.name}</Link> - {product.count} шт.</p>
         ))
+    }
+
+    const approveOrder = (orderId) => {
+        axios.post(`http://localhost:8081/orders/deliver/${orderId}`, '', {
+            headers: {
+                'Authorization': 'Bearer ' + getJwtToken()
+            }
+        });
     }
 
     const handleStatus = (order) => {
         if (order.orderStatus.localeCompare("REGISTERED") === 0) {
-            return <td className="whitespace-nowrap px-6 py-4">На рассмотрении</td>
+            return <td className="whitespace-nowrap px-6 py-4 font-medium hover:cursor-pointer"
+                       onClick={() => approveOrder(order.id)}>
+                На рассмотрении
+            </td>
         } else {
             return <td className="whitespace-nowrap px-6 py-4 text-green-600">Доставлен</td>
         }
@@ -49,8 +60,11 @@ const OrdersTable = () => {
 
     return (
         <div className="flex flex-col w-4/5 mx-auto mt-10">
-            <h1 className="mx-auto font-medium text-xl mb-6 text-gray-900">
-                История заказов
+            <h1 className="mx-auto font-medium text-xl mb-2 text-gray-900">
+                Заказы пользователей
+            </h1>
+            <h1 className="mx-auto text-sm mb-6 text-gray-300">
+                Для того, чтобы пометить заказ как доставленный, просто тыкните на статус заказа
             </h1>
             <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
@@ -62,11 +76,12 @@ const OrdersTable = () => {
                                 <th scope="col" className="px-6 py-4">Позиции</th>
                                 <th scope="col" className="px-6 py-4">Цена заказа</th>
                                 <th scope="col" className="px-6 py-4">Адрес доставки</th>
+                                <th scope="col" className="px-6 py-4">Почта пользователя</th>
                                 <th scope="col" className="px-6 py-4">Статус заказа</th>
                             </tr>
                             </thead>
                             <tbody>
-                            {orders.map((order) => (
+                            {orders.map((order, idx) => (
                                 <tr className="border-b dark:border-neutral-500">
                                     <td className="whitespace-nowrap px-6 py-4 font-medium">{order.id}</td>
                                     <td className="flex flex-col whitespace-nowrap px-6 py-4">
@@ -74,6 +89,7 @@ const OrdersTable = () => {
                                     </td>
                                     <td className="whitespace-nowrap px-6 py-4">{order.totalPrice.toFixed(2)}</td>
                                     <td className="whitespace-nowrap px-6 py-4">{order.address}</td>
+                                    <td className="whitespace-nowrap px-6 py-4">{order.userAccount.email}</td>
                                     {handleStatus(order)}
                                 </tr>
                             ))}
@@ -86,4 +102,4 @@ const OrdersTable = () => {
     );
 };
 
-export default OrdersTable;
+export default OrderPage;

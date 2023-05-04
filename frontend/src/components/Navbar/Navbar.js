@@ -29,6 +29,7 @@ const Navbar = () => {
                     {!admin && <Link to="/cart" className="mr-5 hover:text-gray-900">Корзина</Link>}
                     <Link to="/personal-area" className="mr-5 hover:text-gray-900">Личный кабинет</Link>
                     {admin && <Link to="/product-statistics" className="mr-5 hover:text-gray-900">Статистика по продуктам</Link>}
+                    {admin && <Link to="/orders" className="mr-5 hover:text-gray-900">Заказы</Link>}
                     {admin && <Link to="/new-product" className="mr-5 hover:text-gray-900">Новый продукт</Link>}
                 </nav>
                 <button

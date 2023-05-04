@@ -4,7 +4,7 @@ import {getJwtToken} from "../../utils/AuthUtils";
 
 const CategoryDropdown = ({ handleCategoryChange }) => {
     const [categories, setCategories] = useState([]);
-    const [selectedCategory, setSelectedCategory] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState(1);
 
     useEffect(() => {
         async function fetchCategories() {

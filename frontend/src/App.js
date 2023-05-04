@@ -13,6 +13,7 @@ import {store} from "./redux"
 import NavbarLayout from "./utils/NavbarLayout";
 import ProductStatistics from "./components/ProductStatistics/ProductStatistics";
 import PersonalAreaPage from "./pages/PersonalAreaPage/PersonalAreaPage";
+import OrderPage from "./pages/OrdersPage/OrderPage";
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
                             <Route path="/new-product" element={<NewProductPage/>}/>
                             <Route path="/products/:id" element={<ProductPage/>}/>
                             <Route path="/personal-area" element={<PersonalAreaPage/>}/>
+                            <Route path="/orders" element={<OrderPage/>}/>
                             <Route path="/cart" element={<Cart/>}/>
                             <Route path="/product-statistics" element={<ProductStatistics/>}/>
                         </Route>

@@ -30,9 +30,10 @@ public class ProductService {
                 .orElseThrow(() -> new ProductNotFound("Продукт с таким ID не найден."));
     }
 
-    public Product decrementStorageNum(Long id, Integer number) {
+    public Product decrementStorageNumAndIncOrderNum(Long id, Integer number) {
         Product product = findById(id);
         product.setStorageNum(product.getStorageNum() - number);
+        product.setOrderNum(product.getOrderNum() + number);
         return productRepository.save(product);
     }
 

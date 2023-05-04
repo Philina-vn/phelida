@@ -44,15 +44,16 @@ public class OrderService {
                 .setAddress(dto.getAddress())
                 .setTotalPrice(dto.getTotalPrice())
                 .setOrderStatus(REGISTERED);
-        updateStorageNumber(dto);
+        updateStorageNumberAndOrderNum(dto);
         statisticsService.incrementOrdersNum();
         return orderRepository.save(order);
     }
 
-    private void updateStorageNumber(OrderCreationDto dto) {
+    private void updateStorageNumberAndOrderNum(OrderCreationDto dto) {
         dto.getProductIds().stream()
                 .collect(Collectors.groupingBy(i -> i, Collectors.counting()))
-                .forEach((key, value) -> productService.decrementStorageNum(key, value.intValue()));
+                .forEach((key, value) ->
+                    productService.decrementStorageNumAndIncOrderNum(key, value.intValue()));
     }
 
     public Order deliverOrder(Long orderId) {
