@@ -30,6 +30,12 @@ public class ProductService {
                 .orElseThrow(() -> new ProductNotFound("Продукт с таким ID не найден."));
     }
 
+    public Product decrementStorageNum(Long id, Integer number) {
+        Product product = findById(id);
+        product.setStorageNum(product.getStorageNum() - number);
+        return productRepository.save(product);
+    }
+
     @Transactional
     public Product create(ProductCreationDto dto) {
         Product product = new Product()

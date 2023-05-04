@@ -45,6 +45,8 @@ create table orders
 (
     id              bigserial primary key,
     order_status    varchar(255),
+    address         varchar(255),
+    total_price     double precision,
     user_account_id bigint
         constraint FK_orders_user_account_id references user_accounts (id)
 );

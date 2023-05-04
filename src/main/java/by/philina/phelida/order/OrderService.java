@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static by.philina.phelida.order.domain.OrderStatus.DELIVERED;
 import static by.philina.phelida.order.domain.OrderStatus.REGISTERED;
@@ -27,6 +28,10 @@ public class OrderService {
         return orderRepository.findAll();
     }
 
+    public List<Order> findByUser(UserAccount userAccount) {
+        return orderRepository.findByUserAccount(userAccount);
+    }
+
     @Transactional
     public Order createOrder(OrderCreationDto dto, UserAccount userAccount) {
         Order order = new Order()
@@ -36,9 +41,18 @@ public class OrderService {
                               .map(productService::findById)
                               .toList()
                 )
+                .setAddress(dto.getAddress())
+                .setTotalPrice(dto.getTotalPrice())
                 .setOrderStatus(REGISTERED);
+        updateStorageNumber(dto);
         statisticsService.incrementOrdersNum();
         return orderRepository.save(order);
+    }
+
+    private void updateStorageNumber(OrderCreationDto dto) {
+        dto.getProductIds().stream()
+                .collect(Collectors.groupingBy(i -> i, Collectors.counting()))
+                .forEach((key, value) -> productService.decrementStorageNum(key, value.intValue()));
     }
 
     public Order deliverOrder(Long orderId) {

@@ -1,6 +1,6 @@
 import React from "react";
 import './App.css';
-import {BrowserRouter, Navigate, Outlet, Route, Routes} from "react-router-dom";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import RegistrationPage from "./pages/RegistrationPage/RegistrationPage";
 import ProductsPage from "./pages/ProductsPage/ProductsPage";
@@ -12,6 +12,7 @@ import {Provider} from "react-redux";
 import {store} from "./redux"
 import NavbarLayout from "./utils/NavbarLayout";
 import ProductStatistics from "./components/ProductStatistics/ProductStatistics";
+import PersonalAreaPage from "./pages/PersonalAreaPage/PersonalAreaPage";
 
 function App() {
 
@@ -26,8 +27,9 @@ function App() {
                             <Route path="/main" element={<MainPage/>}/>
                             <Route path="/products" element={<ProductsPage/>}/>
                             <Route path="/new-product" element={<NewProductPage/>}/>
-                            <Route path="/cart" element={<Cart/>}/>
                             <Route path="/products/:id" element={<ProductPage/>}/>
+                            <Route path="/personal-area" element={<PersonalAreaPage/>}/>
+                            <Route path="/cart" element={<Cart/>}/>
                             <Route path="/product-statistics" element={<ProductStatistics/>}/>
                         </Route>
                     </Routes>

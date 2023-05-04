@@ -7,4 +7,6 @@ import java.util.List;
 @Data
 public class OrderCreationDto {
     private List<Long> productIds;
+    private String address;
+    private Double totalPrice;
 }

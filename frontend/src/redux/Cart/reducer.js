@@ -9,8 +9,11 @@ const cartSlice = createSlice({
     reducers: {
         setItemInCart: (state, action) => {
             const findItem = state.itemsInCart.find(obj => obj.id === action.payload.id)
+
             if (findItem) {
-                findItem.count++;
+                if (findItem.storageNum > action.payload.count) {
+                    findItem.count++;
+                }
             } else {
                 state.itemsInCart.push({
                     ...action.payload,
@@ -35,20 +38,30 @@ const cartSlice = createSlice({
             }, 0).toString().substring(0, 6))
         },
         removeItem: (state, action) => {
-            removeObjectWithId(state.itemsInCart, action.payload.id)
+            removeObjectWithId(state.itemsInCart, action.payload.id);
+            state.totalPrice = parseFloat(state.itemsInCart.reduce((sum, obj) => {
+                return (obj.price * obj.count) + sum;
+            }, 0).toString().substring(0, 6))
+        },
+        clearCart: (state) => {
+            state.itemsInCart = [];
+            state.totalPrice = 0;
         }
     }
 })
 
 const removeObjectWithId = (arr, id) => {
     const objWithIdIndex = arr.findIndex((obj) => obj.id === id);
-
     if (objWithIdIndex > -1) {
         arr.splice(objWithIdIndex, 1);
     }
-
     return arr;
 }
 
-export const {setItemInCart, deleteItemFromCart, removeItem} = cartSlice.actions
+export const {
+    setItemInCart,
+    deleteItemFromCart,
+    removeItem,
+    clearCart
+} = cartSlice.actions
 export default cartSlice.reducer;

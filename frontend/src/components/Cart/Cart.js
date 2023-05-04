@@ -1,11 +1,21 @@
-import React from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import CartItem from "../CartItem/CartItem";
 import {useSelector} from "react-redux";
+import OrderDetails from "../OrderDetails/OrderDetails";
 
 const Cart = () => {
 
+    const ref = useRef(null);
     const items = useSelector(state => state.cart.itemsInCart)
     const totalPrice = useSelector(state => state.cart.totalPrice)
+    const [isNotEmptyCart, setCartEmptiness] = useState(false);
+
+    useEffect(() => {
+            if (items.length > 0) {
+                setCartEmptiness(true);
+            }
+        },
+        [])
 
     const countAllItems = (items) => {
         return items.reduce((sum, obj) => {
@@ -13,8 +23,12 @@ const Cart = () => {
         }, 0)
     }
 
+    const handleOrderButton = () => {
+        ref.current?.scrollIntoView({behavior: 'smooth'});
+    }
+
     return (
-        <div className="container mx-auto mt-10">
+        <div className="container mx-auto mt-10 w-3/4">
             <div className="flex shadow-md my-10">
                 <div className="w-3/4 bg-white px-10 py-10">
                     <div className="flex justify-between border-b pb-8">
@@ -40,14 +54,18 @@ const Cart = () => {
                     <div className="border-t mt-8">
                         <div className="flex font-semibold justify-between py-6 text-sm uppercase">
                             <span>Общая цена</span>
-                            <span>{totalPrice} BYN</span>
+                            <span>{totalPrice.toFixed(2)} BYN</span>
                         </div>
                         <button
-                            className="text-white bg-gray-800 font-semibold hover:bg-gray-900 rounded py-3 text-sm uppercase w-full">
+                            className="text-white bg-gray-800 font-semibold hover:bg-gray-900 rounded py-3 text-sm uppercase w-full"
+                            onClick={handleOrderButton}>
                             Оформить
                         </button>
                     </div>
                 </div>
+            </div>
+            <div ref={ref}>
+                {isNotEmptyCart && <OrderDetails/>}
             </div>
         </div>
     );

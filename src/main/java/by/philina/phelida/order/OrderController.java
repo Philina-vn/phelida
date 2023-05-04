@@ -24,6 +24,11 @@ public class OrderController {
         return ResponseEntity.ok(orderService.createOrder(dto, userAccount));
     }
 
+    @GetMapping("/my")
+    public ResponseEntity<List<Order>> findByUserAccount(@AuthenticationPrincipal UserAccount userAccount) {
+        return ResponseEntity.ok(orderService.findByUser(userAccount));
+    }
+
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<Order>> findAll() {

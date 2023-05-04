@@ -24,6 +24,10 @@ public class Order {
     @ManyToOne(fetch = EAGER)
     private UserAccount userAccount;
 
+    private String address;
+
+    private Double totalPrice;
+
     @OneToMany
     @JoinTable(
             name = "orders_products",

@@ -26,6 +26,10 @@ const ProductPage = () => {
         return product.materials.map(obj => obj.name).join(', ');
     }
 
+    const isStorageEmpty = () => {
+        return product.storageNum === 0;
+    }
+
     const addToCart = (e) => {
         e.stopPropagation();
         dispatch(setItemInCart(product))
@@ -62,11 +66,15 @@ const ProductPage = () => {
                         </div>
                         <div className="flex">
                             <span className="title-font font-medium text-2xl text-gray-900">{product.price} BYN</span>
-                            <button
+                            {!isStorageEmpty() ? <button
                                 className="flex ml-auto text-white bg-gray-800 border-0 py-2 px-6 focus:outline-none hover:bg-gray-900 rounded"
                                 onClick={addToCart}>
                                 Добавить в корзину
                             </button>
+                            :
+                            <span className="flex ml-auto title-font font-medium text-2xl text-gray-900">
+                                Товар закончился.
+                            </span>}
                         </div>
                     </div>
                     <img alt="ecommerce" className="lg:w-1/3 lg:h-1/2 object-cover object-center rounded"

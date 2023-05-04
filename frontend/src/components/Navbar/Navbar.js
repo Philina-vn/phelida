@@ -26,7 +26,8 @@ const Navbar = () => {
                 </Link>
                 <nav className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
                     <Link to="/products" className="mr-5 hover:text-gray-900">Католог</Link>
-                    <Link to="/cart" className="mr-5 hover:text-gray-900">Корзина</Link>
+                    {!admin && <Link to="/cart" className="mr-5 hover:text-gray-900">Корзина</Link>}
+                    <Link to="/personal-area" className="mr-5 hover:text-gray-900">Личный кабинет</Link>
                     {admin && <Link to="/product-statistics" className="mr-5 hover:text-gray-900">Статистика по продуктам</Link>}
                     {admin && <Link to="/new-product" className="mr-5 hover:text-gray-900">Новый продукт</Link>}
                 </nav>

@@ -31,7 +31,7 @@ const CartItem = ({product, number}) => {
                 </div>
                 <div className="flex flex-col justify-between ml-4 flex-grow">
                     <span className="font-bold text-sm">{product.name}</span>
-                    <span className="text-red-500 text-xs">{product.size}</span>
+                    <span className="text-gray-400 text-xs">{product.category.name}</span>
                     <p className="font-semibold hover:text-red-500 hover:cursor-pointer text-gray-500 text-xs"
                        onClick={remove}>
                         Удалить
@@ -54,7 +54,7 @@ const CartItem = ({product, number}) => {
                 </svg>
             </div>
             <span className="text-center w-1/5 font-semibold text-sm">{product.price} BYN</span>
-            <span className="text-center w-1/5 font-semibold text-sm">{product.price * number} BYN</span>
+            <span className="text-center w-1/5 font-semibold text-sm">{(product.price * number).toFixed(2)} BYN</span>
         </div>
     );
 };
