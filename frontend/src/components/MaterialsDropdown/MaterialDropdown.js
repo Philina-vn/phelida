@@ -25,8 +25,6 @@ const MaterialDropdown = ({ handleMaterialsChange, selectedMaterials }) => {
     const handleCheckboxChange = (event) => {
         const materialId = event.target.value;
         const isChecked = event.target.checked;
-        console.log(selectedMaterials);
-        console.log(isChecked);
         if (isChecked) {
             handleMaterialsChange([...selectedMaterials, materialId]);
         } else {
