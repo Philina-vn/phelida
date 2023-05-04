@@ -1,0 +1,30 @@
+version: '3'
+services:
+
+  phelida-db:
+    image: 'postgres:14.0'
+    container_name: 'phelida-db'
+    environment:
+      - 'POSTGRES_USER=postgres'
+      - 'POSTGRES_PASSWORD=root'
+      - 'POSTGRES_DB=db'
+
+  phelida-backend:
+    build: ./
+    container_name: 'phelida-backend'
+    ports:
+      - "8081:8081"
+    environment:
+      - 'SPRING_DATASOURCE_URL=jdbc:postgresql://phelida-db:5432/db'
+      - 'SPRING_DATASOURCE_USERNAME=postgres'
+      - 'SPRING_DATASOURCE_PASSWORD=root'
+    depends_on:
+      - phelida-db
+
+  phelida-frontend:
+    build: ./frontend
+    container_name: 'phelida-frontend'
+    ports:
+      - "3000:3000"
+    depends_on:
+      - phelida-backend

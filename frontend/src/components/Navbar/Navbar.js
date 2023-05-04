@@ -10,7 +10,7 @@ const Navbar = () => {
     const navigate = useNavigate();
 
     const toLoginPage = () => {
-        navigate("/login");
+        navigate("/");
         deleteJwtToken();
     }
 

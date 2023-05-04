@@ -64,7 +64,7 @@ const OrderPage = () => {
                 Заказы пользователей
             </h1>
             <h1 className="mx-auto text-sm mb-6 text-gray-300">
-                Для того, чтобы пометить заказ как доставленный, просто тыкните на статус заказа
+                Для того, чтобы пометить заказ как доставленный, кликните на статус заказа
             </h1>
             <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">

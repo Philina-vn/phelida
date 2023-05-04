@@ -22,7 +22,7 @@ function App() {
             <div className="App">
                 <BrowserRouter>
                     <Routes>
-                        <Route index path="/login" element={<LoginPage/>}/>
+                        <Route index path="/" element={<LoginPage/>}/>
                         <Route path="/registration" element={<RegistrationPage />} />
                         <Route element={<NavbarLayout/>}>
                             <Route path="/main" element={<MainPage/>}/>
